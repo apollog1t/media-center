@@ -1,0 +1,38 @@
+---
+
+- name: settings deluge
+  
+  hosts: host
+  
+  become: yes 
+  become_user: root
+  become_method: sudo
+  
+  environment:
+   PATH: "{{ env_path }}"
+  
+  vars:
+    script_name: add-torrents.sh
+    work_path: /usr/bin/
+
+  tasks:
+   - name: include usr vars
+     include_vars: ../vars/user.yml
+
+   - name: include fs vars
+     include_vars: ../vars/file-system.yml
+
+   - name: install cron
+     shell: aptitude install -y cron
+  
+   - copy:
+      src: "{{ script_name }}"
+      dest: "{{ work_path }}"
+      owner: "{{ login }}"
+      group: "{{ login }}"
+      mode: 0555
+
+   - cron:
+      name: "add movies to download"
+      job: "{{ work_path }}/{{ script_name }} {{ tormovies_path }} {{ movies_path }}"
+      user: "{{ login }}"

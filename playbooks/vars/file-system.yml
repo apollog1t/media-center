@@ -1,0 +1,19 @@
+---
+
+hdd_path: /dev/sda1
+
+storage_unit_name: mnt-storage
+
+storage_path: "/mnt/storage"
+
+ftp_path: "{{ storage_path }}/ftp"
+
+# torrents
+torrents_path: "{{ ftp_path }}/torrents"
+
+tormovies_path: "{{ torrents_path }}/movies"
+tormusic_path: "{{ torrents_path }}/music"
+
+movies_path: "{{ storage_path }}/movies"
+music_path: "{{ storage_path }}/music"
+#

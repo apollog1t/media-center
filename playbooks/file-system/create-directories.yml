@@ -1,0 +1,68 @@
+---
+
+- name: settings file system
+  
+  hosts: host
+
+  become: yes 
+  become_user: root
+  become_method: sudo
+  
+  tasks:
+    
+  - name: include fs vars
+    include_vars: ../vars/file-system.yml
+
+  - name: include usr vars
+    include_vars: ../vars/user.yml
+
+
+  - name: create ftp directory
+    file:
+      path: "{{ ftp_path }}"
+      state: directory
+      owner: "{{ login }}"
+      group: "{{ login }}"
+      mode: 0775
+
+  - name: create torrnet root
+    file:
+      path: "{{ torrents_path }}"
+      state: directory
+      owner: "{{ login }}"
+      group: "{{ login }}"
+      mode: 0775
+
+  - name: create torrnet movies
+    file:
+      path: "{{ tormovies_path }}"
+      state: directory
+      owner: "{{ login }}"
+      group: "{{ login }}"
+      mode: 0775
+
+  - name: create torrnet music
+    file:
+      path: "{{ tormusic_path }}"
+      state: directory
+      owner: "{{ login }}"
+      group: "{{ login }}"
+      mode: 0775
+
+  - name: create movies
+    file:
+      path: "{{ movies_path }}"
+      state: directory
+      owner: "{{ login }}"
+      group: "{{ login }}"
+      mode: 0775
+
+  - name: create music
+    file:
+      path: "{{ music_path }}"
+      state: directory
+      owner: "{{ login }}"
+      group: "{{ login }}"
+      mode: 0775
+
+  

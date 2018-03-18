@@ -1,0 +1,29 @@
+---
+
+- name: settings deluge
+  
+  hosts: host
+  
+  become: yes 
+  become_user: root
+  become_method: sudo
+  
+  environment:
+   PATH: "{{ env_path }}"
+
+  tasks:
+
+   - name: install deluge
+      command: aptitude install -y deluged && deluge-console
+
+    - copy:
+        src: deluged.service
+        dest: /etc/systemd/system
+
+    - lineinfile:
+        path: /etc/systemd/system/deluged.service
+        regexp: '^User='
+        line: "User={{ login }}"
+
+    - name: start and init unit
+      shell: systemctl start deluged && systemctl enable deluged 

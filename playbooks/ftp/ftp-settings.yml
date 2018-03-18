@@ -1,0 +1,45 @@
+---
+
+- name: settings ftp
+  
+  hosts: host
+  
+  become: yes 
+  become_user: root
+  become_method: sudo
+  
+  environment:
+   PATH: "{{ env_path }}"
+  
+  vars:
+    ftp_path: "{{ storage_root }}/ftp" 
+
+  tasks:
+
+  - name: install
+    shell: aptitude install vsftpd -y
+  
+  - name: create ftp directory
+    file:
+      path: "{{ ftp_path }}"
+      state: directory
+      owner: "{{ login }}"
+      group: "{{ login }}"
+      mode: 0775
+      force: yes
+
+  - copy:
+      src: vsftpd.conf
+      dest: /etc/
+      force: yes
+    
+  - lineinfile:
+      path: /etc/vsftpd.conf
+      regexp: '^local_root='
+      line: "local_root= {{ ftp_path }}"
+
+  - name: unit init
+    shell: systemctl start vsftpd && systemctl enable vsftpd
+
+  
+    

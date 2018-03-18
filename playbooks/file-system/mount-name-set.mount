@@ -1,0 +1,11 @@
+[Unit]
+Description=file-storage
+
+[Mount]
+What=
+Where=
+Type=ext4
+Options=defaults,noexec
+
+[Install]
+WantedBy=multi-user.target

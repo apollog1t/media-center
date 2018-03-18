@@ -1,0 +1,45 @@
+---
+
+- name: mount hdd settings
+  
+  hosts: host
+  
+  become: yes 
+  become_user: root
+  become_method: sudo
+
+  vars:
+    unit_path: "/etc/systemd/system/{{ storage_unit_name }}.mount"
+
+  tasks:
+
+  # - name: include fs vars
+  #   include_vars: ../vars/file-system.yml
+
+  # - name: include usr vars
+  #   include_vars: ../vars/user.yml
+  
+  - name: create target mount path
+    file:
+      path: "{{ storage_path }}"
+      state: directory
+      owner: "{{ login }}"
+      group: "{{ login }}"
+      mode: 0775
+
+  - copy:
+        src: mount-name-set.mount
+        dest: "{{unit_path}}"
+  
+  - lineinfile:
+      path: "{{unit_path}}"
+      regexp: '^What='
+      line: "What={{ hdd_path }}"  
+
+  - lineinfile:
+      path: "{{unit_path}}"
+      regexp: '^Where='
+      line: "Where={{ storage_path }}"  
+
+  - name: init unit
+    shell: "systemctl start {{ storage_unit_name }}.mount && systemctl enable {{ storage_unit_name }}.mount"
