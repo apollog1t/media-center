@@ -36,3 +36,8 @@
       name: "add movies to download"
       job: "{{ work_path }}/{{ script_name }} {{ tormovies_path }} {{ movies_path }}"
       user: "{{ login }}"
+
+   - cron:
+      name: "add music to download"
+      job: "{{ work_path }}/{{ script_name }} {{ tormusic_path }} {{ music_path }}"
+      user: "{{ login }}"

@@ -1,4 +1,4 @@
-# !/bin/bash
+#!/bin/bash
 
 #$1 source directory with torrents file
 #$2 target path downloads file

@@ -14,8 +14,8 @@
     shell: "systemctl daemon-reload"
 
 
-- import_playbook: file-system/hdd-mount.yml
-- import_playbook: file-system/create-directories.yml
-- import_playbook: ftp/ftp-settings.yml
+#- import_playbook: file-system/hdd-mount.yml
+#- import_playbook: file-system/create-directories.yml
+#- import_playbook: ftp/ftp-settings.yml
 - import_playbook: deluge/torrent-sheduler.yml
   
